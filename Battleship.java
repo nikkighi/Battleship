@@ -12,8 +12,9 @@ public class Battleship {
     	 * Computer randomly places ship location and user has multiple tries to hit
     	 * the ship until 4 index values of the ship is hit. User is prompted to enter
     	 * a value from 0-19 for each try. If a guess is a hit, the word “Hit!” is printed
-    	 * If a guess is a miss, the word “Miss!” is printed. Congratulations message 
-    	 * is printed along with total number of guesses made.
+    	 * and that index var is updated to a value of 1 on the hit array. Any value
+    	 * other than 1-19 prompts an error message. If a guess is a miss, the word
+    	 * “Miss!” is printed. Hit array is printed along with number of guesses made.
     	*/
     	
         // Declare variables and instantiate objects
@@ -38,29 +39,45 @@ public class Battleship {
 
         // Game loop
         while (sum < 4) {
-            // Prompt the user for a guess
+            // Prompt the user for a guess and validate input
             System.out.print("Enter an index value to try to hit the battleship (0-19): ");
-            guess = scanner.nextInt();
-            guesses++; // Increment total guesses
+            
+            // Check if input is a valid integer and within the range
+            if (scanner.hasNextInt()) {
+                guess = scanner.nextInt();
+                
+                // Check if guess is between 0 and 19
+                if (guess >= 0 && guess <= 19) {
+                    guesses++; // Increment total guesses
 
-            // Check if the guess is a hit or miss
-            if (sea[guess] == 1) {
-                System.out.println();
-                System.out.println("HIT!");
-                hit[guess] = 1; 
+                    // Check if the guess is a hit or miss
+                    if (sea[guess] == 1) {
+                        System.out.println();
+                        System.out.println("HIT!");
+                        hit[guess] = 1; 
+                    } else {
+                        System.out.println();
+                        System.out.println("MISS!");
+                    }
+
+                    // Sum the hits (calculate how many spots have been hit)
+                    sum = 0; 
+                    for (int value : hit) {
+                        sum += value; 
+                    }
+
+                    // Print the hit array to show user their progress
+                    printHitArray(hit);
+                } else {
+                    System.out.println("Error: Please enter a number between 0 and 19.");
+                    System.out.println();
+                    scanner.nextLine(); // Clear the buffer
+                }
             } else {
+                System.out.println("Error: Invalid input. Please enter a valid number between 0 and 19.");
                 System.out.println();
-                System.out.println("MISS!");
+                scanner.nextLine(); // Clear the invalid input
             }
-
-            // Sum the hits (calculate how many spots have been hit)
-            sum = 0; 
-            for (int value : hit) {
-                sum += value; 
-            }
-
-            // Print the hit array to show user their progress
-            printHitArray(hit);
         }
 
         // Print result message
