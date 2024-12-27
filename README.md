@@ -1,2 +1,2 @@
 # Battleship
-knkn
+Developed a Battleship-style game where the computer randomly places a ship on a grid, and the user has multiple attempts to locate it. The user is prompted to input values between 0-19 for each guess, with feedback provided for each attempt. If the guess is a hit, "Hit!" is displayed; if a miss, "Miss!" is shown. The game concludes with a congratulatory message and the total number of guesses taken to hit all four ship segments.
